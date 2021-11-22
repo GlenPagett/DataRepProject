@@ -64,6 +64,17 @@ app.get('/api/movies/:id',(req, res)=>{
     })
 })
 
+app.delete('/api/movies/:id', (req,res)=> {
+    console.log('Delete: ' +req.params.id);
+
+    movieModel.deleteOne({_id: req.params.id}, 
+        (error, data)=>{
+            if (error)
+                res.send(error);
+            res.send(data);
+        })
+})
+
 app.put('/api/movies/:id',(req, res)=>{
     console.log('update');
     console.log(req.body);
