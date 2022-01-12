@@ -6,23 +6,29 @@ class Edit extends Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.onChangeMovieName = this.onChangeMovieName.bind(this);
-        this.onChangeMovieYear = this.onChangeMovieYear.bind(this);
-        this.onChangeMoviePoster = this.onChangeMoviePoster.bind(this);
+        this.onChangeStudentName = this.onChangeStudentName.bind(this);
+        this.onChangeStudentId = this.onChangeStudentId.bind(this);
+        this.onChangeStudentDes = this.onChangeStudentDes.bind(this);
+        this.onChangeStudentGrade = this.onChangeStudentGrade.bind(this);
+        this.onChangeStudentTeacher = this.onChangeStudentTeacher.bind(this);
         this.state = {
-            Title: '',
-            Year: '',
-            Poster: ''
+            Name: '',
+            Id: '',
+            Description: '',
+            Grade: '',
+            Teacher: ''
         }
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/api/movies/'+ this.props.match.params.id)
+        axios.get('http://localhost:4000/api/roles/'+ this.props.match.params.id)
         .then((response)=>{
             this.setState({
-                Title:response.data.Title,
-                Year:response.data.Year,
-                Poster:response.data.Poster,
+                Name:response.data.Name,
+                Id:response.data.Id,
+                Description:response.data.Description,
+                Grade:response.data.Grade,
+                Teacher:response.data.Teacher,
                 _id:response.data._id
             })
         })
@@ -30,76 +36,108 @@ class Edit extends Component {
     }
 
     handleSubmit(event) {
-        console.log("Name: " +this.state.Title+
-        " Year: " + this.state.Year +
-        "Poster: " + this.state.Poster);
+        console.log("Student Name: " +this.state.Name+
+        " Student Id: " + this.state.Id +
+        " Student Description: " + this.state.Description+
+        " Student Grade: " + this.state.Grade+
+        "Student Teacher: " + this.state.Teacher);
 
-        const NewMovie = {
-            Title: this.state.Title,
-            Year: this.state.Year,
-            Poster: this.state.Poster
+        const NewRole = {
+            Name: this.state.Name,
+            Id: this.state.Id,
+            Description: this.state.Description,
+            Grade: this.state.Grade,
+            Teacher: this.state.Teacher
         }
 
-        axios.put('http://localhost:4000/api/movies/' + this.state._id, NewMovie)
+        axios.put('http://localhost:4000/api/roles/' + this.state._id, NewRole)
         .then((response)=>{console.log(response)})
         .catch();
         
 
         event.preventDefault();
         this.setState({
-            Title:'',
-            Year:'',
-            Poster:''
+            Name:'',
+            Id:'',
+            Description:'',
+            Grade: '',
+            Teacher: ''
         });
     }
-    onChangeMovieName(event) {
+    onChangeStudentName(event) {
         this.setState({
-            Title: event.target.value
+            Name: event.target.value
         })
     }
-    onChangeMovieYear(event) {
+    onChangeStudentId(event) {
         this.setState({
-            Year: event.target.value
+            Id: event.target.value
         })
     }
-    onChangeMoviePoster(event){
+    onChangeStudentDes(event){
         this.setState({
-            Poster: event.target.value
+            Description: event.target.value
+        })
+    }
+    onChangeStudentGrade(event){
+        this.setState({
+            Grade: event.target.value
+        })
+    }
+    onChangeStudentTeacher(event){
+        this.setState({
+            Teacher: event.target.value
         })
     }
 
     render() {
         return (
             <div>
-                <h1>This is my Edit Component!</h1>
+                <h1>Here is if you want to Edit the Student Information</h1>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="form-group">
-                        <label>Edit Movie Name: </label>
+                        <label>Edit Student's Name: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.Title}
-                            onChange={this.onChangeMovieName}
+                            value={this.state.Name}
+                            onChange={this.onChangeStudentName}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Edit Movie Year: </label>
+                        <label>Edit Student's Id: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.Year}
-                            onChange={this.onChangeMovieYear}
+                            value={this.state.Id}
+                            onChange={this.onChangeStudentId}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Edit Movie Poster: </label>
+                        <label>Edit Student Description: </label>
                         <textarea type="text"
                             className="form-control"
-                            value={this.state.Poster}
-                            onChange={this.onChangeMoviePoster}
+                            value={this.state.Description}
+                            onChange={this.onChangeStudentDes}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Edit Student's Grade: </label>
+                        <textarea type="text"
+                            className="form-control"
+                            value={this.state.Grade}
+                            onChange={this.onChangeStudentGrade}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Edit Student's Teacher: </label>
+                        <textarea type="text"
+                            className="form-control"
+                            value={this.state.Teacher}
+                            onChange={this.onChangeStudentTeacher}
                         />
                     </div>
                     <div>
-                        <input type="submit" value="Edit Movie"
+                        <input type="submit" value="Edit Student Information"
                             className="btn btn-primary"></input>
                     </div>
                 </form>

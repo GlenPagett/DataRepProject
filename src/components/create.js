@@ -5,28 +5,36 @@ class Create extends Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.onChangeMovieName = this.onChangeMovieName.bind(this);
-        this.onChangeMovieYear = this.onChangeMovieYear.bind(this);
-        this.onChangeMoviePoster = this.onChangeMoviePoster.bind(this);
+        this.onChangeStudentName = this.onChangeStudentName.bind(this);
+        this.onChangeStudentId = this.onChangeStudentId.bind(this);
+        this.onChangeStudentDes = this.onChangeStudentDes.bind(this);
+        this.onChangeStudentGrade = this.onChangeStudentGrade.bind(this);
+        this.onChangeStudentTeacher = this.onChangeStudentTeacher.bind(this);
         this.state = {
-            Title: '',
-            Year: '',
-            Poster: ''
+            Name: '',
+            Id: '',
+            Description: '',
+            Grade: '',
+            Teacher: ''
         }
     }
 
     handleSubmit(event) {
-        console.log("Name: " +this.state.Title+
-        " Year: " + this.state.Year +
-        "Poster: " + this.state.Poster);
+        console.log("Student Name: " +this.state.Name+
+        " Student Id: " + this.state.Id +
+        " Student Description: " + this.state.Description+
+        " Student Grade: " + this.state.Grade+
+        "Student Teacher: " + this.state.Teacher);
 
-        const NewMovie = {
-            Title: this.state.Title,
-            Year: this.state.Year,
-            Poster: this.state.Poster
+        const NewRole = {
+            Name: this.state.Name,
+            Id: this.state.Id,
+            Description: this.state.Description,
+            Grade: this.state.Grade,
+            Teacher: this.state.Teacher
         }
 
-        axios.post('http://localhost:4000/api/movies', NewMovie)
+        axios.post('http://localhost:4000/api/roles', NewRole)
         .then((response)=>{
             console.log(response)
         })
@@ -36,59 +44,88 @@ class Create extends Component {
 
         event.preventDefault();
         this.setState({
-            Title:'',
-            Year:'',
-            Poster:''
+            Name:'',
+            Id:'',
+            Description:'',
+            Grade: '',
+            Teacher: ''
         });
     }
-    onChangeMovieName(event) {
+    onChangeStudentName(event) {
         this.setState({
-            Title: event.target.value
+            Name: event.target.value
         })
     }
-    onChangeMovieYear(event) {
+    onChangeStudentId(event) {
         this.setState({
-            Year: event.target.value
+            Id: event.target.value
         })
     }
-    onChangeMoviePoster(event){
+    onChangeStudentDes(event){
         this.setState({
-            Poster: event.target.value
+            Description: event.target.value
+        })
+    }
+    onChangeStudentGrade(event){
+        this.setState({
+            Grade: event.target.value
+        })
+    }
+    onChangeStudentTeacher(event){
+        this.setState({
+            Teacher: event.target.value
         })
     }
 
     render() {
         return (
             <div>
-                <h1>This is my Create Component!</h1>
+                <h1>Here is the Create Student Rolebook</h1>
+                <h3>Below is where you can add the student's information</h3>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="form-group">
-                        <label>Add Movie Name: </label>
+                        <label>Add Student's Name: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.Title}
-                            onChange={this.onChangeMovieName}
+                            value={this.state.Name}
+                            onChange={this.onChangeStudentName}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Add Movie Year: </label>
+                        <label>Add Student's Id: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.Year}
-                            onChange={this.onChangeMovieYear}
+                            value={this.state.Id}
+                            onChange={this.onChangeStudentId}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Add Movie Poster: </label>
+                        <label>Add Student Description: </label>
                         <textarea type="text"
                             className="form-control"
-                            value={this.state.Poster}
-                            onChange={this.onChangeMoviePoster}
+                            value={this.state.Description}
+                            onChange={this.onChangeStudentDes}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Add Student's Grade: </label>
+                        <textarea type="text"
+                            className="form-control"
+                            value={this.state.Grade}
+                            onChange={this.onChangeStudentGrade}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Add Student's Teacher: </label>
+                        <textarea type="text"
+                            className="form-control"
+                            value={this.state.Teacher}
+                            onChange={this.onChangeStudentTeacher}
                         />
                     </div>
                     <div>
-                        <input type="submit" value="Add Movie"
+                        <input type="submit" value="Add Student Information"
                             className="btn btn-primary"></input>
                     </div>
                 </form>

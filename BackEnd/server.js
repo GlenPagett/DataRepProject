@@ -21,53 +21,59 @@ app.use(bodyParser.json())
 
 const mongoose = require('mongoose');
 
-const strConnection = 'mongodb+srv://admin:admin@cluster0.8taek.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-
+const strConnection = 'mongodb+srv://admin:admin@cluster0.cmmhd.mongodb.net/rolebook?retryWrites=true&w=majority'
+                       
 main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(strConnection);
 }
 
-const movieSchema = new mongoose.Schema({
-    Title:String,
-    Year:String,
-    Poster:String
+const roleSchema = new mongoose.Schema({
+    Name:String,
+    Id:String,
+    Description:String,
+    Grade:String,
+    Teacher:String
 });
 
-const movieModel = mongoose.model('martin', movieSchema);
+const roleModel = mongoose.model('role', roleSchema);
 
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.post('/api/movies', (req,res)=>{
+app.post('/api/roles', (req,res)=>{
     console.log(req.body);
-    console.log(req.body.Title);
-    console.log(req.body.Year);
-    console.log(req.body.Poster);
+    console.log(req.body.Name);
+    console.log(req.body.Id);
+    console.log(req.body.Description);
+    console.log(req.body.Grade);
+    console.log(req.body.Teacher);
 
-    movieModel.create({
-        Title:req.body.Title,
-        Year:req.body.Year,
-        Poster:req.body.Poster
+    roleModel.create({
+        Name:req.body.Name,
+        Id:req.body.Id,
+        Description:req.body.Description,
+        Grade:req.body.Grade,
+        Teacher:req.body.Teacher
     });
     res.send('Data Sent to Server!')
 })
 
-app.get('/api/movies/:id',(req, res)=>{
+app.get('/api/roles/:id',(req, res)=>{
     console.log(req.params.id);
 
-    movieModel.findById(req.params.id,(error,data)=>{
+    roleModel.findById(req.params.id,(error,data)=>{
         res.json(data);
     })
 })
 
-app.delete('/api/movies/:id', (req,res)=> {
+app.delete('/api/roles/:id', (req,res)=> {
     console.log('Delete: ' +req.params.id);
 
-    movieModel.deleteOne({_id: req.params.id}, 
+    roleModel.deleteOne({_id: req.params.id}, 
         (error, data)=>{
             if (error)
                 res.send(error);
@@ -75,25 +81,23 @@ app.delete('/api/movies/:id', (req,res)=> {
         })
 })
 
-app.put('/api/movies/:id',(req, res)=>{
+app.put('/api/roles/:id',(req, res)=>{
     console.log('update');
     console.log(req.body);
     console.log("Updating: " + req.params.id);
 
-    movieModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
+    roleModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
         (err,data)=>{
             res.send(data);
         })
 
 })
 
-app.get('/api/movies', (req, res) => {
-    movieModel.find((err, data)=>{
+app.get('/api/roles', (req, res) => {
+    roleModel.find((err, data)=>{
         res.json(data);
     })
-          
-           // https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg
-      
+                
 })
 
 
